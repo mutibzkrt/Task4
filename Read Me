@@ -1,0 +1,50 @@
+##Muhammet Bozkurt
+##Proje Yapısı
+
+multi_task_project/
+│
+├── app.py                    # Ana çalışma dosyası (entry point)
+├── task_runner.py            # Çoklu işlemleri başlatan ve yöneten modül
+├── database.py               # Veritabanı işlemleri için modül
+├── resource_monitor.py       # Kaynak kullanımını izleyen modül
+├── config.py                 # Konfigürasyon ayarları (veritabanı ayarları vb.)
+└── requirements.txt          # Gerekli Python kütüphaneleri
+Gerekli Kütüphaneleri Kurma
+Projemiz için birkaç Python kütüphanesine ihtiyacımız olacak:
+
+multiprocessing: Çoklu işlem yönetimi için
+psutil: Kaynak kullanımını izlemek için
+sqlite3: Veritabanı işlemleri için (SQLite kullanacağız)
+
+Projeyi Çalıştırma
+
+# Proje klasörüne gidin
+cd multi_task_project
+
+# Sanal ortamı aktif edin
+source venv/bin/activate
+
+# Ana uygulamayı çalıştırın
+python app.py
+Çıktı ve İzleme
+
+Kaynak Kullanımını İzleme: psutil kullanarak her bir işlemin CPU ve RAM kullanımını anlık olarak izleyebilirsiniz. Bu veriler terminalde görülecektir.
+Veritabanına Kayıt: İşlem durumları (başlangıç, bitiş zamanı, CPU, RAM kullanımı) SQLite veritabanına kaydedilecektir. Veritabanını sorgulamak için şu komutları kullanabilirsiniz:
+
+from database import get_process_status
+
+# Veritabanındaki tüm kayıtları al
+status = get_process_status()
+for record in status:
+    print(record)
+###Proje Sonuçları
+Bu proje:
+
+1000 farklı işlemi paralel olarak çalıştıracak.
+Her işlemin başlangıç ve bitiş zamanını, CPU ve RAM kullanımını veritabanına kaydedecek.
+Kaynak kullanımını gerçek zamanlı olarak terminalde gösterecek.
+
+###Ekstra Bilgi###
+İşlem Bağımlılıkları: Eğer işler birbirine bağımlıysa, multiprocessing.Queue kullanarak iletişim kurabilirsiniz.
+Performans İzleme: Çok sayıda işlem çalıştırıldığında, sistemin yükünü gözlemleyin. İşlem başlatma sayısını sınırlamak gerekebilir.
+Veritabanı Performansı: SQLite küçük ölçekli projeler için uygundur, ancak daha büyük projelerde PostgreSQL veya MySQL gibi daha güçlü veritabanları kullanmak gerekebilir.
